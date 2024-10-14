@@ -1,0 +1,12 @@
+Count,Message,Traceback,Nodes
+20,list index out of range,"  File ""E:\Install_Software\python\lib\site-packages\locust\user\task.py"", line 296, in run
+    self.execute_next_task()
+  File ""E:\Install_Software\python\lib\site-packages\locust\user\task.py"", line 321, in execute_next_task
+    self.execute_task(self._task_queue.pop(0))
+  File ""E:\Install_Software\python\lib\site-packages\locust\user\task.py"", line 333, in execute_task
+    task(self)
+  File ""L:\Locust_Concurrent_v4\locustfile\test_rename_file_folder.py"", line 63, in test_rename_file_folder
+    file_id, num_id = self.get_file()
+  File ""L:\Locust_Concurrent_v4\locustfile\test_rename_file_folder.py"", line 50, in get_file
+    file_id = json.loads(self.req.text)[""data""][user][""id""]
+",local

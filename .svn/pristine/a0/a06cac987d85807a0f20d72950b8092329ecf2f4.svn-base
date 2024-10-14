@@ -1,0 +1,27 @@
+
+email_qq:
+  name: QQ
+  host: smtp.qq.com
+  user: 1365810824@qq.com
+  pass: fhakgreinnkmbaea
+  recipients: 997154440@qq.com
+  subject: Ecshop手机版测试报告
+  part: 请先下载附件之后,解开压缩包,使用pycharm打开里面的index.html文件(当前只想到该打开方式)
+
+
+email_wechat:
+  name: Whect
+  host: smtp.exmail.qq.com
+  user: wangqitao@aomeikeji.com
+  pass: bdhepFnqqjxT8P3G
+  recipients: yangtao@aomeikeji.com
+  subject: Ecshop手机版测试报告
+  part: 请先下载附件之后,解开压缩包,使用pycharm打开里面的index.html文件(当前只想到该打开方式)
+
+
+
+
+
+
+
+

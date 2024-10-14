@@ -1,0 +1,58 @@
+# -*- encoding: utf-8 -*-
+'''
+@时间 ： 2022/11/8 20:02
+@作者 ： WangQitao
+@文件名称： test5.py 
+'''
+import shutil
+import sys
+import os
+
+sys.path.append(os.path.abspath(os.path.dirname(__file__) + '/' + '..'))
+
+
+path = input("请你输入文件路径：") + os.sep
+num = int(input("请输入文件夹层数："))
+testtype = int(input("请输入类型  1-生成空文件夹   2-生成指定大小文件 ："))
+name = r"\Test"
+i = 0
+list_path = []
+
+# 生成层级目录
+while i < num:
+    path += name+str(i+1)
+    # 计数器自增
+    i += 1
+    isExists = os.path.exists(path)
+    if not isExists:
+        os.makedirs(path)
+        print("%s 目录创建成功"%path)
+    else:
+        print("%s 目录创建成功"%path)
+        continue
+    list_path.append(path)
+
+
+files_path = list_path[-1]
+print()
+if testtype == 1:
+    # 生成空文件夹
+    num_files = int(input("请输入文件夹个数："))
+    for i in range(int(num_files)):
+        os.makedirs(files_path+os.sep+name+str(i+1))
+
+elif testtype == 2:
+    # 生成文件
+    size = int(input("请输入文件的大小(bytes)："))   # 50000000=50MB
+    num_file = int(input("请输入文件个数："))
+    for j in range(int(num_file)):
+        with open(files_path+os.sep+str(j)+".txt", 'wb') as f:
+            f.seek(size-1)
+            f.write(b'\x00')
+
+cengji_num = int(input("请输入循环的文件夹个数："))
+for i in range(int(cengji_num)):
+    files_path = list_path[0]
+
+    shutil.copytree(files_path, files_path+"--"+str(i+1))
+    print(files_path)

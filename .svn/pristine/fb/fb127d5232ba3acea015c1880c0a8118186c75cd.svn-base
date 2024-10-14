@@ -1,0 +1,32 @@
+# -*- encoding: utf-8 -*-
+'''
+@时间 ： 2022/11/9 9:19
+@作者 ： WangQitao
+@文件名称： test6.py 
+'''
+import random
+import sys
+import os
+
+sys.path.append(os.path.abspath(os.path.dirname(__file__) + '/' + '..'))
+# def genSizeFile(fileName, fileSize):
+#     #file path
+#     filePath=r"O:\report"+os.sep+fileName+".txt"
+#     # 生成固定大小的文件
+#     # date size
+#     ds=0
+#     with open(filePath, "w", encoding="utf8") as f:
+#         while ds<fileSize:
+#             f.write(str(round(random.uniform(-1000, 1000),2)))
+#             f.write("\n")
+#             ds=os.path.getsize(filePath)
+#     # print(os.path.getsize(filePath))
+#
+# # start here.
+# genSizeFile("1k",1*1024)
+def createfile(fileName,size):
+    filePath=r"O:\report"+os.sep+fileName+".txt"
+    with open(fileName,'wb') as f:
+        f.seek(size-1)
+        f.write(b'\x00')
+createfile("2",1000)

@@ -1,0 +1,58 @@
+# -*- encoding: utf-8 -*-
+'''
+@时间 ： 2023/12/15 16:55
+@作者 ： WangQitao
+@名称 ： test.py 
+@描述 ：
+'''
+import json
+import sys
+import os
+
+import datetime
+from pytz import timezone
+import requests
+import time
+
+sys.path.append(os.path.abspath(os.path.dirname(__file__) + '/' + '..'))
+header = {"Content-Type": "application/json"}
+current_time = datetime.datetime.now()
+hours_to_add = datetime.timedelta(hours=7)
+print(type(current_time+hours_to_add))
+payload = json.dumps([
+    {
+        "m": "df713346-cae5-31cc-80a6-cfc3a9734a10",
+        "t": f"{current_time+hours_to_add}",    # 改为时间戳
+        "w": "12",
+        "l": "1",
+        "n": "1",
+        "u": "test_wqt",
+        "v": "1",
+        "re": "12.0.0",
+        "s": "1",
+        "la": "1",
+        "o": "windows 11 home_wqt",
+        "c": "xxx",
+        "i": 1660745869,
+        "id": 20,
+        "r": 1660745869
+    }
+])
+a=requests.post(url="https://a.aomeisoftware.com/api/v2/soft/collect", data=payload, headers=header)
+print(a)
+
+
+
+#
+# timestamp = int(time.time())
+# print("当前时间戳为：", timestamp)
+#
+# # 定义柏林时间所属的时区
+# berlin_tz = timezone('Europe/Berlin')
+#
+# # 获取当前的UTC时间
+# utc_now = datetime.datetime.utcnow()
+#
+# # 将UTC时间转换为柏林时间
+# berlin_time = utc_now.astimezone(berlin_tz)+datetime.timedelta(hours=7)
+# print("柏林时间：", berlin_time)

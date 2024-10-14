@@ -1,0 +1,91 @@
+# -*- encoding: utf-8 -*-
+'''
+@时间 ： 2022/4/15 15:06
+@作者 ： 王齐涛
+@文件名称： svn_client.py 
+'''
+__author__ = 'shouke'
+
+import subprocess
+import os.path
+
+class SVNClient:
+    def __init__(self):
+        self.svn_work_path = 'C:\Users\AOMEI 2021\Desktop\TestEcshop'
+        if not os.path.exists(self.svn_work_path):
+            print('svn工作路径：%s 不存在，退出程序' % self.svn_work_path)
+        exit()
+        self.try_for_filure = 1 # 提交失败，重试次数
+
+    def get_svn_work_path(self):
+        return self.svn_work_path
+
+    def set_svn_work_path(self, svn_work_path):
+        self.svn_work_path = svn_work_path
+
+    def update(self):
+        args = 'cd /d ' + self.svn_work_path + ' & svn update'
+        with subprocess.Popen(args, shell=True, universal_newlines = True, stdout=subprocess.PIPE, stderr=subprocess.PIPE) as proc:
+            output = proc.communicate()
+            print('执行svn update命令输出：%s' % str(output))
+            if not output[1]:
+                print('svn update命令执行成功')
+                return [True,'执行成功']
+            else:
+                print('svn update命令执行失败:%s' % str(output))
+        return [False, str(output)]
+
+    def add(self, path):
+        args = 'cd /d ' + self.svn_work_path + ' & svn add ' + path
+        with subprocess.Popen(args, shell=True, universal_newlines = True, stdout=subprocess.PIPE, stderr=subprocess.PIPE) as proc:
+            output = proc.communicate()
+            print('执行svn add命令输出：%s' % str(output))
+            if not output[1] or ( not str(output)and str(output).find('is already under version control') != -1):
+                print('svn add命令执行成功' )
+                return [True,'执行成功']
+            else:
+                print('svn add命令执行失败:%s' % str(output))
+                return [False, 'svn add命令执行失败:%s' % str(output)]
+
+    def commit(self, path):
+        args = 'cd /d ' + self.svn_work_path + ' & svn commit -m "添加版本文件"' + path
+        with subprocess.Popen(args, shell=True, universal_newlines = True, stdout=subprocess.PIPE, stderr=subprocess.PIPE) as proc:
+            output = proc.communicate()
+            print('执行svn commit命令输出：%s' % str(output))
+            if not output[1]:
+                print('svn commit命令执行成功')
+                return [True,'执行成功']
+            else:
+                print('svn commit命令执行失败,正在重试:%s' % str(output))
+                if self.try_for_filure != 0:
+                    self.commit(path)
+                    self.try_for_filure = self.try_for_filure - 1
+                return [False, str(output)]
+
+
+    # filepath_list = []
+    # # 获取目标目录下的文件|子目录|子文件路径
+    # def get_subdir_or_subfile_paths(dirpath, excludes):
+    #     global filepath_list
+    #     if not os.path.exists(dirpath):
+    #         print('路径：%s 不存在，退出程序' % dirpath)
+    #         exit()
+    #     elif not os.path.isdir(dirpath):
+    #         print('路径：%s 不为目录' % dirpath)
+    #         return []
+    #
+    #     for name in os.listdir(dirpath):
+    #         for exclude in excludes.strip(',').split(','):
+    #             if not name.endswith(exclude):
+    #                 full_path = os.path.join(dirpath, name)
+    #                 filepath_list.append(full_path)
+    #                 if os.path.isdir(full_path):
+    #                     get_subdir_or_subfile_paths(full_path, exclude)
+    #
+    #     return filepath_list
+if __name__ == '__main__':
+    svn_client = SVNClient()
+    svn_client.update()
+    dirpath = '../report/check_file_folder'
+    if svn_client.add(dirpath)[0]:
+        svn_client.commit(dirpath)

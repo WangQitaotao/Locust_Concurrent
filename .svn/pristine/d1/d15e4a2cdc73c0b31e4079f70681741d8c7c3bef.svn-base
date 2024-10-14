@@ -1,0 +1,10 @@
+Authorization: c5667094c1da4909909950ce6c8a23d60fa6988a75504b478bb410bc4efbb4977c187a919ea44e0cb3a4a46b1ada9de2fc9e80734a0c4ebfa252e58933b385cf
+Http_CB_EN: http://209.126.124.140:30020  # 傲梅与接口
+Http_CB_CN:
+Http_AB_EN: http://209.126.124.140:10002
+Http_AB_CN: http://192.168.3.39:10002
+
+
+
+# 傲梅云
+# EN 国外测试服 CN国内测试服
